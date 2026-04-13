@@ -1,4 +1,4 @@
-name: MuleSoft Build POC
+name: MuleSoft CI/CD POC
 on: [push] 
 
 jobs:
@@ -14,5 +14,13 @@ jobs:
           java-version: '11'
           distribution: 'zulu'
           
-      - name: Build with Maven
-        run: mvn clean package -DskipTests
+      - name: Build and Deploy to CloudHub
+        env:
+          # This pulls the secrets you just created into the script
+          ANYPOINT_USERNAME: ${{ secrets.ANYPOINT_USERNAME }}
+          ANYPOINT_PASSWORD: ${{ secrets.ANYPOINT_PASSWORD }}
+        run: |
+          mvn clean deploy -DmuleDeploy \
+          -Danypoint.username=$ANYPOINT_USERNAME \
+          -Danypoint.password=$ANYPOINT_PASSWORD \
+          -DskipTests
