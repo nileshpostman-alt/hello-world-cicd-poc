@@ -1,4 +1,4 @@
-name: MuleSoft CI/CD POC
+name: Test MuleSoft CI/CD POC
 on: [push] 
 
 jobs:
